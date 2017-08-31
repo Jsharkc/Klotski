@@ -1,8 +1,7 @@
 package main
 
 import (
-	"Klotski/component"
-	comp "klotski/component"
+	comp "Klotski/component"
 	"time"
 
 	"github.com/nsf/termbox-go"
@@ -20,7 +19,7 @@ var (
 )
 
 func main() {
-	component.InitCompMap()
+	comp.InitCompMap()
 
 	err := termbox.Init()
 	if err != nil {
@@ -70,7 +69,7 @@ loop:
 				case termbox.KeyArrowUp:
 					comp.CompMap[0].Move(1)
 				case termbox.KeyArrowDown:
-					_comp.CompMap[0].Move(1)
+					comp.CompMap[0].Move(1)
 				}
 
 			case termbox.EventResize:
