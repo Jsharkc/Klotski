@@ -11,11 +11,9 @@ Klotski game of go.
 (基于 go1.9，别的版本应该也可以)
 
 ``` sh
-# 克隆到本地
+# cd 到 GOPATH 路径
+# 克隆项目到本地
 git clone https://github.com/Jsharkc/Klotski.git
-
-# 安装依赖
-go get
 
 # 运行
 go run main.go
