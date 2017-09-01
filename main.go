@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"time"
 
 	"github.com/nsf/termbox-go"
@@ -9,22 +10,21 @@ import (
 )
 
 var (
-	curComp *comp.Component
+	curComp *comp.Elem
 	isWin   bool
 )
 
 // DrawAll draw game UI
 func DrawAll() {
-	for _, value := range comp.CompMap {
+	for _, value := range comp.Elems {
 		value.Draw()
 	}
 	comp.DrawTip()
-	comp.DrawStep()
 }
 
 // ClearAll clear game UI
 func ClearAll() {
-	for _, value := range comp.CompMap {
+	for _, value := range comp.Elems {
 		value.Clear()
 	}
 	comp.DrawTip()
@@ -46,9 +46,15 @@ func main() {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 	termbox.Flush()
 
-	comp.InitCompMap()
+	flag.Parse()
+	if len(flag.Args()) > 0 {
+		comp.InitElems(flag.Arg(0))
+	} else {
+		comp.InitElems()
+	}
+
 	comp.DrawIntroduce()
-	curComp = comp.CompMap[0]
+	curComp = comp.Elems[0]
 
 	// Event queue
 	eventQueue := make(chan termbox.Event)
@@ -74,32 +80,40 @@ loop:
 
 				switch ev.Ch {
 				case 'q', 'Q':
-					curComp = comp.CompMap[0]
+					curComp = comp.Elems[0]
 				case 'w', 'W':
-					curComp = comp.CompMap[1]
+					curComp = comp.Elems[1]
 				case 'e', 'E':
-					curComp = comp.CompMap[2]
+					curComp = comp.Elems[2]
 				case 'r', 'R':
-					curComp = comp.CompMap[3]
+					curComp = comp.Elems[3]
 				case 't', 'T':
-					curComp = comp.CompMap[4]
+					curComp = comp.Elems[4]
 				case 'y', 'Y':
-					curComp = comp.CompMap[5]
+					curComp = comp.Elems[5]
 				case 'u', 'U':
-					curComp = comp.CompMap[6]
+					curComp = comp.Elems[6]
 				case 'i', 'I':
-					curComp = comp.CompMap[7]
+					curComp = comp.Elems[7]
 				case 'o', 'O':
-					curComp = comp.CompMap[8]
+					curComp = comp.Elems[8]
 				case 'p', 'P':
-					curComp = comp.CompMap[9]
+					curComp = comp.Elems[9]
 				case 'c', 'C':
 					ClearAll()
-					comp.InitCompMap()
+					comp.InitElems()
 					isWin = false
-					curComp = comp.CompMap[0]
+					curComp = comp.Elems[0]
+				case 's', 'S':
+					err := comp.WriteDateTo(comp.BakFile)
+					if err != nil {
+						comp.Tip = " Store Error  "
+					}
+					comp.Tip = "Store Success "
 				default:
 				}
+
+				comp.DrawTip()
 
 				if !isWin {
 					switch ev.Key {
