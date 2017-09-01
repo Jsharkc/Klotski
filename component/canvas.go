@@ -89,8 +89,6 @@ func InitElems(file ...string) {
 			PosiMap[posi] = false
 		}
 	}
-
-	// fmt.Printf("\n[DEBUG]:elems %v\nPosiMap %v\n", elems, PosiMap)
 }
 
 func readDateFrom(file string) ([]int8, error) {
@@ -124,8 +122,6 @@ func WriteDateTo(file string) error {
 		for _, posi := range Elems[index].Position {
 			date[tempIndex] = byte(posi)
 			tempIndex++
-
-			drawStr("Index:%v", tempIndex, 10, 16, termbox.ColorWhite, termbox.ColorDefault)
 		}
 	}
 
@@ -133,7 +129,6 @@ func WriteDateTo(file string) error {
 		if !PosiMap[index] {
 			date[tempIndex] = byte(index)
 			tempIndex++
-			drawStr("Index:%v", tempIndex, 10, 18, termbox.ColorWhite, termbox.ColorDefault)
 		}
 	}
 

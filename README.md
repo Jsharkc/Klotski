@@ -19,8 +19,11 @@ go get
 
 # 运行
 go run main.go
+
+# 读档
+go run main.go Date.bak
 ```
 
 ## 展示
 
-
+![image](/img/show.png)
